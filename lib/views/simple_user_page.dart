@@ -9,12 +9,13 @@ class SimpleUserPage extends StatelessWidget {
     final userName = userProvider.userName;
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(245, 222, 179, 120),
       appBar: AppBar(
-        title: Text('Página do Usuario'),
-      ),
-      body: Center(
-        child: Text('Bem-vindo, $userName!'),
-      ),
+          title: Text(
+            'Bem vindo ao Bula Online $userName!',
+            style: TextStyle(fontSize: 15),
+          ),
+          backgroundColor: Colors.amber),
     );
   }
 }

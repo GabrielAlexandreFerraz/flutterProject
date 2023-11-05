@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       create: (context) => UserProvider(),
       child: MaterialApp(
         title: 'Tela Login',
-        theme: ThemeData(primarySwatch: Colors.blue),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(),
         home: LoginPage(),
       ),
     );
