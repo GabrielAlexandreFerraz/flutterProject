@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:novatela/services/login_get_http.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:novatela/provider/user_provider.dart';
 import 'dart:convert';
@@ -17,41 +18,12 @@ class _LoginPageState extends State<LoginPage> {
   String _email = '';
   String _senha = '';
 
-  Future<void> fetchData(String email, String senha) async {
-    final baseUrl = 'http://10.0.2.2:8080/usuarios';
-    final endpoint = '/buscarUsuario';
-
-    Uri uri = Uri.parse('$baseUrl$endpoint?email=$email&senha=$senha');
-
-    try {
-      print('entrou no try');
-      final response = await http.get(uri).timeout(Duration(seconds: 30));
-
-      if (response.statusCode == 200) {
-        print('Resposta Completa: ${response.body}');
-
-        Map<String, dynamic> usuario = jsonDecode(response.body);
-        if (usuario['tipo'] == '1') {
-          Provider.of<UserProvider>(context, listen: false)
-              .setUserName(usuario['nome']);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AdminUserPage()),
-          );
-        } else if (usuario['tipo'] == '2') {
-          Provider.of<UserProvider>(context, listen: false)
-              .setUserName(usuario['nome']);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SimpleUserPage()),
-          );
-        }
-      } else {
-        print('Erro: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Erro: $e');
-    }
+  Future<void> _fetchData(String email, String senha) async {
+    LoginGetHttp.fetchData(
+      context,
+      _email,
+      _senha,
+    );
   }
 
   @override
@@ -71,24 +43,44 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(245, 222, 179, 120))),
+                          color: Color.fromARGB(255, 130, 225, 238))),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.white12,
-                  border: Border.all(
-                    color: const Color.fromARGB(245, 222, 179, 120),
-                    width: 1,
+              Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white12,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 130, 225, 238)
+                                .withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 40,
+                            offset: Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                padding: const EdgeInsets.all(20),
-                child: Image.asset(
-                  'assets/iconebulapequeno.png',
-                  width: 80,
-                  height: 80,
-                ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.all(20),
+                    child: Image.asset(
+                      'assets/iconebulapequeno.png',
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 30),
               Form(
@@ -101,12 +93,12 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: 'Email',
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                            color: Color.fromARGB(245, 222, 179, 120),
+                            color: Color.fromARGB(255, 130, 225, 238),
                           )),
                           labelStyle: TextStyle(
-                            color: Color.fromARGB(245, 222, 179, 120),
+                            color: Color.fromARGB(255, 130, 225, 238),
                           )),
-                      cursorColor: Color.fromARGB(245, 222, 179, 120),
+                      cursorColor: Color.fromARGB(255, 130, 225, 238),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor, insira seu email';
@@ -122,17 +114,17 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Senha',
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color.fromARGB(245, 222, 179,
-                                120), // Define a cor de destaque ao ser selecionado
+                            color: Color.fromARGB(255, 130, 225,
+                                238), // Define a cor de destaque ao ser selecionado
                           ),
                         ),
                         labelStyle: TextStyle(
-                          color: Color.fromARGB(245, 222, 179,
-                              120), // Cor do rótulo quando não está selecionado
+                          color: Color.fromARGB(255, 130, 225,
+                              238), // Cor do rótulo quando não está selecionado
                         ),
                       ),
                       cursorColor: const Color.fromARGB(
-                          245, 222, 179, 120), // Define a cor do cursor
+                          255, 186, 217, 2380), // Define a cor do cursor
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -144,22 +136,36 @@ class _LoginPageState extends State<LoginPage> {
                         _senha = value!;
                       },
                     ),
-                    SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 35),
-                        child: SizedBox(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                                fetchData(_email, _senha);
-                              }
-                            },
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Color.fromRGBO(226, 204, 171, 01))),
-                            child: Text('Fazer Login'),
+                    Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 130, 225, 238)
+                                .withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 20,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: SizedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: SizedBox(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  LoginGetHttp.fetchData(
+                                      context, _email, _senha);
+                                }
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Color.fromARGB(255, 130, 225, 238))),
+                              child: Text('Fazer Login'),
+                            ),
                           ),
                         ),
                       ),
@@ -181,13 +187,16 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white12,
-                                border: Border.all(
-                                  color:
-                                      const Color.fromARGB(245, 245, 240, 234),
-                                  width: 2,
-                                )),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromARGB(255, 130, 225, 238)
+                                      .withOpacity(0.2),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(7.5),
                               child: Image.asset(
@@ -207,13 +216,15 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(width: 10),
                               Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white12,
-                                  border: Border.all(
-                                    color: const Color.fromARGB(
-                                        245, 245, 240, 234),
-                                    width: 2,
-                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color.fromARGB(255, 130, 225, 238)
+                                          .withOpacity(0.2),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(7),
@@ -236,12 +247,15 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(width: 8),
                               Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white12,
-                                  border: Border.all(
-                                    color: Color.fromARGB(245, 245, 240, 234),
-                                    width: 2,
-                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color.fromARGB(255, 130, 225, 238)
+                                          .withOpacity(0.2),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(6),

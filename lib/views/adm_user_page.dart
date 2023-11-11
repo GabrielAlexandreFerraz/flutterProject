@@ -9,13 +9,13 @@ class AdminUserPage extends StatelessWidget {
     final userName = userProvider.userName;
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(245, 222, 179, 120),
+      backgroundColor: Color.fromARGB(255, 186, 217, 238),
       appBar: AppBar(
           title: Text(
             'Página de Adm, Bem vindo $userName!',
             style: TextStyle(fontSize: 15),
           ),
-          backgroundColor: Colors.amber),
+          backgroundColor: Color.fromARGB(255, 130, 225, 238)),
     );
   }
 }
