@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class MedicamentoGetHttp {
+class MedicamentoTodosGetHttp {
   static Future<List<dynamic>> fetchMedicamentos() async {
-    final url = Uri.parse('http://10.0.2.2:8080/medicamento-generico');
+    final url = Uri.parse('http://10.0.2.2:8080/medicamento-todos');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

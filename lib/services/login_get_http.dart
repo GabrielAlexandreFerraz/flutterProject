@@ -26,14 +26,14 @@ class LoginGetHttp {
         if (usuario['tipo'] == '1') {
           Provider.of<UserProvider>(context, listen: false)
               .setUserName(usuario['nome']);
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => AdminUserPage()),
           );
         } else if (usuario['tipo'] == '2') {
           Provider.of<UserProvider>(context, listen: false)
               .setUserName(usuario['nome']);
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => SimpleUserPage()),
           );
