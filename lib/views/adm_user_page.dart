@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:novatela/views/adm_add_medicamento_etico.dart';
+import 'package:novatela/views/adm_delete_medicamento_etico.dart';
+import 'package:novatela/views/adm_list_all_medicamento_etico.dart';
 import 'package:provider/provider.dart';
 import 'package:novatela/provider/user_provider.dart';
 
@@ -73,7 +75,11 @@ class AdminUserPage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Ação ao selecionar a Opção 1 no Drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DeletaMedicamentoEtico()),
+                    );
                   },
                   tileColor: Colors.white, // Cor de fundo do ListTile
                   contentPadding: EdgeInsets.all(4.0), // Espaçamento interno
@@ -153,7 +159,11 @@ class AdminUserPage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Ação ao selecionar a Opção 1 no Drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ListarTodosMedicamentos()),
+                    );
                   },
                   tileColor: Colors.white, // Cor de fundo do ListTile
                   contentPadding: EdgeInsets.all(4.0), // Espaçamento interno
