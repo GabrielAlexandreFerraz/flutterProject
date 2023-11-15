@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:novatela/services/medicamento_etico_post_http.dart';
+import 'package:novatela/services/medicamento_generico_post_http.dart';
 
-class AddMedicamentoEtico extends StatelessWidget {
-  final TextEditingController nomeComercial = TextEditingController();
+class AddMedicamentoGenerico extends StatelessWidget {
   final TextEditingController laboratorio = TextEditingController();
   final TextEditingController principioAtivo = TextEditingController();
   final TextEditingController posologia = TextEditingController();
@@ -34,9 +33,8 @@ class AddMedicamentoEtico extends StatelessWidget {
     );
   }
 
-  void salvarMedicamento(BuildContext context) async {
+  void salvarMedicamento(BuildContext context) {
     var medicamento = {
-      'nomeComercial': nomeComercial.text,
       'laboratorio': laboratorio.text,
       'principioAtivo': principioAtivo.text,
       'posologia': posologia.text,
@@ -46,9 +44,8 @@ class AddMedicamentoEtico extends StatelessWidget {
       'interacaoMedicamentosa': interacaoMedicamentosa.text,
     };
 
-    MedicamentoEticoPostHttp.salvarMedicamentoEtico(medicamento);
+    MedicamentoGenericoPostHttp.salvarMedicamentoGenerico(medicamento);
 
-    nomeComercial.clear();
     laboratorio.clear();
     principioAtivo.clear();
     posologia.clear();
@@ -57,11 +54,10 @@ class AddMedicamentoEtico extends StatelessWidget {
     controlado.clear();
     interacaoMedicamentosa.clear();
 
-    _showAlertDialog(context, 'Medicamento salvo com sucesso!');
+    _showAlertDialog(context, 'Medicamento Generico salvo com sucesso!');
   }
 
   void limparCampos() {
-    nomeComercial.clear();
     laboratorio.clear();
     principioAtivo.clear();
     posologia.clear();
@@ -76,7 +72,7 @@ class AddMedicamentoEtico extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 186, 217, 238),
       appBar: AppBar(
-        title: Text('Adicionar Medicamento Etico'),
+        title: Text('Adicionar Medicamento Generico'),
         backgroundColor: Color.fromARGB(255, 130, 225, 238),
       ),
       body: SingleChildScrollView(
@@ -85,10 +81,6 @@ class AddMedicamentoEtico extends StatelessWidget {
           child: Form(
             child: Column(
               children: [
-                TextFormField(
-                  controller: nomeComercial,
-                  decoration: InputDecoration(labelText: 'Nome Comercial'),
-                ),
                 TextFormField(
                   controller: laboratorio,
                   decoration: InputDecoration(labelText: 'Laboratório'),
@@ -125,25 +117,23 @@ class AddMedicamentoEtico extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          salvarMedicamento(context);
-                        },
-                        child: Text('Salvar'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 14, 29,
-                              100), // Change the background color of the button here
-                        ),
-                      ),
+                          onPressed: () {
+                            salvarMedicamento(context);
+                          },
+                          child: Text('Salvar'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 14, 29,
+                                100), // Change the background color of the button here
+                          )),
                       ElevatedButton(
-                        onPressed: () {
-                          limparCampos();
-                        },
-                        child: Text('Limpar'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 233, 82,
-                              82), // Change the background color of the button here
-                        ),
-                      ),
+                          onPressed: () {
+                            limparCampos();
+                          },
+                          child: Text('Limpar'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 233, 82,
+                                82), // Change the background color of the button here
+                          )),
                     ],
                   ),
                 ),

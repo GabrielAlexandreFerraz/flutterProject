@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class MedicamentosTodosAdmGetHttp {
-  Future<List<dynamic>> getMedicamentosAdm() async {
+class MedicamentosTodosGetHttp {
+  Future<List<dynamic>> getMedicamentos() async {
     var response =
         await http.get(Uri.parse('http://10.0.2.2:8080/medicamento-todos'));
     if (response.statusCode == 200) {

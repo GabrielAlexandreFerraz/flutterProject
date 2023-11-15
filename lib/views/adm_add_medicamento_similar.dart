@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:novatela/services/medicamento_etico_post_http.dart';
+import 'package:novatela/services/medicamento_similar_post_http.dart';
 
-class AddMedicamentoEtico extends StatelessWidget {
+class AddMedicamentoSimilar extends StatelessWidget {
   final TextEditingController nomeComercial = TextEditingController();
   final TextEditingController laboratorio = TextEditingController();
   final TextEditingController principioAtivo = TextEditingController();
@@ -34,7 +35,7 @@ class AddMedicamentoEtico extends StatelessWidget {
     );
   }
 
-  void salvarMedicamento(BuildContext context) async {
+  void salvarMedicamento(BuildContext context) {
     var medicamento = {
       'nomeComercial': nomeComercial.text,
       'laboratorio': laboratorio.text,
@@ -46,7 +47,7 @@ class AddMedicamentoEtico extends StatelessWidget {
       'interacaoMedicamentosa': interacaoMedicamentosa.text,
     };
 
-    MedicamentoEticoPostHttp.salvarMedicamentoEtico(medicamento);
+    MedicamentoSimilarPostHttp.salvarMedicamentoSimilar(medicamento);
 
     nomeComercial.clear();
     laboratorio.clear();
@@ -57,7 +58,7 @@ class AddMedicamentoEtico extends StatelessWidget {
     controlado.clear();
     interacaoMedicamentosa.clear();
 
-    _showAlertDialog(context, 'Medicamento salvo com sucesso!');
+    _showAlertDialog(context, 'Medicamento Similar salvo com sucesso!');
   }
 
   void limparCampos() {
@@ -76,7 +77,7 @@ class AddMedicamentoEtico extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 186, 217, 238),
       appBar: AppBar(
-        title: Text('Adicionar Medicamento Etico'),
+        title: Text('Adicionar Medicamento Similar'),
         backgroundColor: Color.fromARGB(255, 130, 225, 238),
       ),
       body: SingleChildScrollView(

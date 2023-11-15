@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:novatela/views/adm_add_medicamento_etico.dart';
+import 'package:novatela/views/adm_add_medicamento_generico.dart';
+import 'package:novatela/views/adm_add_medicamento_similar.dart';
 import 'package:novatela/views/adm_delete_medicamento_etico.dart';
+import 'package:novatela/views/adm_delete_medicamento_generico.dart';
+import 'package:novatela/views/adm_delete_medicamento_similar.dart';
 import 'package:novatela/views/adm_list_all_medicamento_etico.dart';
 import 'package:provider/provider.dart';
 import 'package:novatela/provider/user_provider.dart';
@@ -31,7 +35,7 @@ class AdminUserPage extends StatelessWidget {
               children: <Widget>[
                 DrawerHeader(
                   decoration: const BoxDecoration(
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 130, 225, 238),
                   ),
                   child: Consumer<UserProvider>(
                     builder: (context, userProvider, _) {
@@ -47,6 +51,7 @@ class AdminUserPage extends StatelessWidget {
                   ),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.add),
                   title: const Center(
                     child: Text(
                       'Adicionar Medicamento Etico',
@@ -67,6 +72,7 @@ class AdminUserPage extends StatelessWidget {
                   shape: Border(bottom: BorderSide(color: Colors.grey)),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.delete_forever),
                   title: const Center(
                     child: Text(
                       'Excluir Medicamento Etico',
@@ -87,6 +93,7 @@ class AdminUserPage extends StatelessWidget {
                   shape: Border(bottom: BorderSide(color: Colors.grey)),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.add),
                   title: const Center(
                     child: Text(
                       'Adicionar Medicamento Generico',
@@ -95,7 +102,11 @@ class AdminUserPage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Ação ao selecionar a Opção 1 no Drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddMedicamentoGenerico()),
+                    );
                   },
                   tileColor: Colors.white, // Cor de fundo do ListTile
                   contentPadding: EdgeInsets.all(4.0), // Espaçamento interno
@@ -103,6 +114,7 @@ class AdminUserPage extends StatelessWidget {
                   shape: Border(bottom: BorderSide(color: Colors.grey)),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.delete_forever),
                   title: const Center(
                     child: Text(
                       'Excluir Medicamento Generico',
@@ -111,7 +123,11 @@ class AdminUserPage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Ação ao selecionar a Opção 1 no Drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DeletaMedicamentoGenerico()),
+                    );
                   },
                   tileColor: Colors.white, // Cor de fundo do ListTile
                   contentPadding: EdgeInsets.all(4.0), // Espaçamento interno
@@ -119,6 +135,7 @@ class AdminUserPage extends StatelessWidget {
                   shape: Border(bottom: BorderSide(color: Colors.grey)),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.add),
                   title: const Center(
                     child: Text(
                       'Adicionar Medicamento Similar',
@@ -127,7 +144,11 @@ class AdminUserPage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Ação ao selecionar a Opção 1 no Drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddMedicamentoSimilar()),
+                    );
                   },
                   tileColor: Colors.white, // Cor de fundo do ListTile
                   contentPadding: EdgeInsets.all(4.0), // Espaçamento interno
@@ -135,6 +156,7 @@ class AdminUserPage extends StatelessWidget {
                   shape: Border(bottom: BorderSide(color: Colors.grey)),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.delete_forever),
                   title: const Center(
                     child: Text(
                       'Excluir Medicamento Similar',
@@ -143,7 +165,11 @@ class AdminUserPage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Ação ao selecionar a Opção 1 no Drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DeletaMedicamentoSimilar()),
+                    );
                   },
                   tileColor: Colors.white, // Cor de fundo do ListTile
                   contentPadding: EdgeInsets.all(4.0), // Espaçamento interno
@@ -151,6 +177,7 @@ class AdminUserPage extends StatelessWidget {
                   shape: Border(bottom: BorderSide(color: Colors.grey)),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.list_alt),
                   title: const Center(
                     child: Text(
                       'Listar Todos Medicamento',

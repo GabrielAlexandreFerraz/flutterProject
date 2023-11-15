@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class MedicamentoEticoPostHttp {
-  static void salvarMedicamentoEtico(Map<String, String> medicamento) async {
-    var url = Uri.parse('http://10.0.2.2:8080/medicamento-etico');
+class MedicamentoSimilarPostHttp {
+  static void salvarMedicamentoSimilar(Map<String, String> medicamento) async {
+    var url = Uri.parse('http://10.0.2.2:8080/medicamento-similar');
     var headers = {'Content-Type': 'application/json'};
     var body = jsonEncode(medicamento);
     var response = await http.post(url, headers: headers, body: body);
