@@ -4,25 +4,34 @@ import 'dart:convert';
 
 class MedicamentosTodosGetHttp {
   Future<List<dynamic>> getMedicamentos() async {
-    var response =
-        await http.get(Uri.parse('http://10.0.2.2:8080/medicamento-todos'));
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body);
-      if (jsonData.containsKey("eticos") &&
-          jsonData.containsKey("genericos") &&
-          jsonData.containsKey("similares")) {
-        var eticos = jsonData["eticos"];
-        var genericos = jsonData["genericos"];
-        var similares = jsonData["similares"];
+    try {
+      var response =
+          await http.get(Uri.parse('http://10.0.2.2:8080/medicamento-todos'));
 
-        var todosMedicamentos = [...eticos, ...genericos, ...similares];
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body);
 
-        return todosMedicamentos;
+        if (jsonData.containsKey("eticos") &&
+            jsonData.containsKey("genericos") &&
+            jsonData.containsKey("similares")) {
+          var eticos = jsonData["eticos"];
+          var genericos = jsonData["genericos"];
+          var similares = jsonData["similares"];
+
+          var todosMedicamentos = [...eticos, ...genericos, ...similares];
+
+          return todosMedicamentos;
+        } else {
+          throw Exception('O JSON não contém os arrays necessários');
+        }
       } else {
-        throw Exception('O JSON não contém os arrays necessários');
+        throw Exception(
+            'Falha ao carregar os medicamentos. Código de status: ${response.statusCode}');
       }
-    } else {
-      throw Exception('Falha ao carregar os medicamentos');
+    } catch (e) {
+      print('Erro durante a requisição: $e');
+      // Retorna uma lista vazia em caso de falha
+      return [];
     }
   }
 }
